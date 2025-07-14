@@ -15,14 +15,15 @@ document.getElementById('problemForm').addEventListener('submit', async function
   e.preventDefault();
 
   const title = document.getElementById('title').value.trim();
-  const platform = document.getElementById('platform').value.trim();
+  // const platform = document.getElementById('problemLink').value.trim();
+  const link = document.getElementById('problemLink').value.trim(); 
   const tags = document.getElementById('tags').value.trim().split(',').map(tag => tag.trim());
   const notes = document.getElementById('notes').value.trim();
 
   const newProblem = {
     id: Date.now().toString(),
     title,
-    platform,
+    link,
     tags,
     notes,
     status: 'todo',
@@ -55,7 +56,7 @@ function displayProblems() {
 
     card.innerHTML = `
       <h3>${problem.title}</h3>
-      <p><strong>Platform:</strong> ${problem.platform || '-'}</p>
+      <p><strong>Link:</strong> <a href="${problem.link}" target="_blank">${problem.link || '-'}</a></p>
       <p><strong>Tags:</strong> ${problem.tags.join(', ') || '-'}</p>
       <p><strong>Date:</strong> ${problem.date}</p>
       <p><strong>Notes:</strong><br>${problem.notes || '-'}</p>

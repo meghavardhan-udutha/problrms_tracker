@@ -41,7 +41,7 @@ def row_to_dict(row):
     return {
         "id": row[0],
         "title": row[1],
-        "platform": row[2],
+        "link": row[2],
         "tags": row[3].split(',') if row[3] else [],
         "notes": row[4],
         "status": row[5],
@@ -73,12 +73,12 @@ def add_problem():
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
     c.execute('''
-        INSERT INTO problems (id, title, platform, tags, notes, status, date)
+        INSERT INTO problems (id, title, link, tags, notes, status, date)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', (
         data['id'],
         data['title'],
-        data.get('platform', ''),
+        data.get('link', ''),
         ','.join(data.get('tags', [])),
         data.get('notes', ''),
         data.get('status', 'todo'),
