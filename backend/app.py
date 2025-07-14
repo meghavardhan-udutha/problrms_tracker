@@ -51,10 +51,12 @@ def row_to_dict(row):
 def get_problems():
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
-    c.execute('SELECT * FROM problems')
+    # Sort by date DESC (latest first). Use ASC for oldest first.
+    c.execute('SELECT * FROM problems ORDER BY date DESC')
     rows = c.fetchall()
     conn.close()
     return jsonify([row_to_dict(row) for row in rows])
+
 
 @app.route('/problems', methods=['POST'])
 def add_problem():
