@@ -47,6 +47,7 @@ document.getElementById('problemForm').addEventListener('submit', async function
 
 // Display problems
 function displayProblems() {
+  console.log("Fetched problems:", allProblems);
   const list = document.getElementById('problemList');
   list.innerHTML = '';
 
