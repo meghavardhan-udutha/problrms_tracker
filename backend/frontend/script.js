@@ -174,3 +174,19 @@ async function saveEdit() {
   closeEditModal();
   fetchProblems();
 }
+function filterByDate() {
+  const selectedDate = document.getElementById('filterDate').value;
+  if (!selectedDate) return;
+
+  fetch(`${API_URL}?date=${selectedDate}`)
+    .then(res => res.json())
+    .then(data => {
+      allProblems = data;
+      renderProblems();
+    });
+}
+
+function clearDateFilter() {
+  document.getElementById('filterDate').value = '';
+  fetchProblems(); // fetch all problems again
+}

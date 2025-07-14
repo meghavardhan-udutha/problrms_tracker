@@ -25,6 +25,11 @@
       <button onclick="filterProblems('todo')">To-do</button>
       <button onclick="filterProblems('solved')">Solved</button>
     </div>
+    <div style="margin-bottom: 20px;">
+      <label for="filterDate" style="color:#eee;">📅 Filter by Date:</label>
+      <input type="date" id="filterDate" onchange="filterByDate()" />
+      <button onclick="clearDateFilter()">Reset</button>
+    </div>
 
     <!-- Search Bar -->
     <input type="text" id="searchBar" placeholder="Search by title or tag..." oninput="searchProblems()" />

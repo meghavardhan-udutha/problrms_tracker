@@ -49,13 +49,21 @@ def row_to_dict(row):
 
 @app.route('/problems', methods=['GET'])
 def get_problems():
+    selected_date = request.args.get('date')  # from ?date=YYYY-MM-DD
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
-    # Sort by date DESC (latest first). Use ASC for oldest first.
-    c.execute('SELECT * FROM problems ORDER BY date DESC')
+
+    if selected_date:
+        # Return only problems from that date
+        c.execute('SELECT * FROM problems WHERE date = ?', (selected_date,))
+    else:
+        # Return all problems sorted by date
+        c.execute('SELECT * FROM problems ORDER BY date DESC')
+
     rows = c.fetchall()
     conn.close()
     return jsonify([row_to_dict(row) for row in rows])
+
 
 
 @app.route('/problems', methods=['POST'])
