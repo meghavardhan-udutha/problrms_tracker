@@ -6,8 +6,9 @@ import os
 app = Flask(__name__, static_folder='backend/frontend', static_url_path='')
 CORS(app)
 
+# --- Supabase Config ---
 SUPABASE_URL = 'https://lmugwvvihinxxllipyqd.supabase.co'
-SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdWd3dnZpaGlueHhsbGlweXFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI0OTc5MDUsImV4cCI6MjA2ODA3MzkwNX0.A2L5MWcm1L8ejcVhR1pr0QEAr24rpcsIKCkpsAnnIlc'
+SUPABASE_KEY = 'your-secret-key'  # ⛔️ hide this in env variables!
 TABLE_NAME = 'problems'
 
 HEADERS = {
@@ -15,20 +16,14 @@ HEADERS = {
     'Authorization': f'Bearer {SUPABASE_KEY}',
     'Content-Type': 'application/json'
 }
-@app.route('/problems', methods=['POST'])
-def addd_problem():
-    data = request.json
-    print("Incoming POST:", data)  # 👈 Add this line
-    url = f"{SUPABASE_URL}/rest/v1/{TABLE_NAME}"
-    res = requests.post(url, headers=HEADERS, json=data)
-    return jsonify({"message": "Added!"}), res.status_code
 
-# ✅ Serve index.html at "/"
+# --- Frontend Serve ---
 @app.route('/')
 def serve_index():
     return send_from_directory(app.static_folder, 'index.html')
 
-# ✅ API routes
+# --- API Routes ---
+
 @app.route('/problems', methods=['GET'])
 def get_problems():
     date_filter = request.args.get('date')

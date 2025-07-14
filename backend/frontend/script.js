@@ -1,5 +1,6 @@
 // const API_URL = 'http://127.0.0.1:5000/problems';
-const API_URL = 'https://problems-tracker.onrender.com/'; //https://problems-tracker.onrender.com
+// const API_URL = 'https://problems-tracker.onrender.com/'; //https://problems-tracker.onrender.com
+const API_URL = window.location.origin + '/problems';
 let currentFilter = 'all';
 let allProblems = [];
 let difficultyFilter = 'all';
