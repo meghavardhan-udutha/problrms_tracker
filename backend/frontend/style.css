@@ -176,3 +176,59 @@ button:hover {
   color: #00ADB5;
   font-size: 1.2rem;
 }
+.problem-summary {
+  cursor: pointer;
+  background-color: #2d2f36;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.problem-summary:hover {
+  background-color: #393e46;
+}
+
+.problem-details {
+  margin-top: 8px;
+  padding: 10px;
+  background-color: #1e1f24;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.difficulty-tag {
+  float: right;
+  font-size: 0.85rem;
+  color: #00adb5;
+}
+/* Style for dropdown (difficulty) */
+select#difficulty {
+  background-color: #393E46;
+  color: #EEEEEE;
+  padding: 10px;
+  border: 1px solid #00ADB5;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  margin-bottom: 10px;
+  transition: border 0.3s ease;
+}
+
+select#difficulty:focus {
+  border-color: #00ffcc;
+}
+select#difficultyFilter {
+  background-color: #393E46;
+  color: #EEEEEE;
+  padding: 10px;
+  border: 1px solid #00ADB5;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  margin-bottom: 10px;
+  transition: border 0.3s ease;
+}
+
+select#difficultyFilter:focus {
+  border-color: #00ffcc;
+}

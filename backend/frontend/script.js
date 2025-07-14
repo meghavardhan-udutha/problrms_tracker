@@ -78,25 +78,35 @@ filtered.forEach(problem => {
       card.className = 'problem-card';
 
       card.innerHTML = `
-        <h3>${problem.title}</h3>
-        <p><strong>Link:</strong> <a href="${problem.link}" target="_blank">${problem.link || '-'}</a></p>
-        <p><strong>Difficulty:</strong> ${problem.difficulty || '-'}</p>
-        <p><strong>Tags:</strong> ${problem.tags.join(', ') || '-'}</p>
-        <p><strong>Date:</strong> ${problem.date}</p>
-        <p><strong>Notes:</strong><br>${problem.notes || '-'}</p>
-        <span class="status ${problem.status}">${problem.status.toUpperCase()}</span>
-        <div class="card-actions">
-          <button onclick="markSolved('${problem.id}')">✅ Done</button>
-          <button onclick="openEditModal('${problem.id}')">✏️ Edit</button>
-          <button onclick="deleteProblem('${problem.id}')">🗑️ Delete</button>
+        <div class="problem-summary" onclick="toggleDetails('${problem.id}')">
+          <strong>${problem.title}</strong> <span class="difficulty-tag">${problem.difficulty}</span><br>
+          <small>📅 ${problem.date}</small>
+        </div>
+        <div class="problem-details" id="details-${problem.id}" style="display: none;">
+          <p><strong>Tags:</strong> ${problem.tags.join(', ') || '-'}</p>
+          <p><strong>Notes:</strong><br>${problem.notes || '-'}</p>
+          <p><strong>Link:</strong> <a href="${problem.link}" target="_blank">${problem.link || '-'}</a></p>
+          <p><strong>Status:</strong> ${problem.status.toUpperCase()}</p>
+          <div class="card-actions">
+            <button onclick="markSolved('${problem.id}')">✅ Done</button>
+            <button onclick="openEditModal('${problem.id}')">✏️ Edit</button>
+            <button onclick="deleteProblem('${problem.id}')">🗑️ Delete</button>
+          </div>
         </div>
       `;
+
 
       list.appendChild(card);
     });
   });
 
 }
+
+function toggleDetails(id) {
+  const section = document.getElementById(`details-${id}`);
+  section.style.display = section.style.display === 'none' ? 'block' : 'none';
+}
+
 
 function applyFilters() {
   difficultyFilter = document.getElementById('difficultyFilter').value;
