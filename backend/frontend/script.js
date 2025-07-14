@@ -2,6 +2,8 @@
 const API_URL = 'https://problems-tracker.onrender.com/problems';
 let currentFilter = 'all';
 let allProblems = [];
+let difficultyFilter = 'all';
+let tagFilter = '';
 
 // Fetch and display problems from backend
 async function fetchProblems() {
@@ -49,9 +51,12 @@ function displayProblems() {
   list.innerHTML = '';
 
   const filtered = allProblems.filter(problem => {
-    if (currentFilter === 'all') return true;
-    return problem.status === currentFilter;
+    const matchesStatus = currentFilter === 'all' || problem.status === currentFilter;
+    const matchesDifficulty = difficultyFilter === 'all' || problem.difficulty === difficultyFilter;
+    const matchesTag = tagFilter === '' || problem.tags.some(tag => tag.toLowerCase().includes(tagFilter));
+    return matchesStatus && matchesDifficulty && matchesTag;
   });
+
 
   filtered.forEach(problem => {
     const card = document.createElement('div');
@@ -74,6 +79,12 @@ function displayProblems() {
 
     list.appendChild(card);
   });
+}
+
+function applyFilters() {
+  difficultyFilter = document.getElementById('difficultyFilter').value;
+  tagFilter = document.getElementById('tagFilter').value.toLowerCase();
+  displayProblems();  // re-render
 }
 
 // Filter buttons

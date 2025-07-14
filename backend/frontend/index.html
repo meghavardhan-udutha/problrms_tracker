@@ -40,6 +40,21 @@
 
     <!-- Search Bar -->
     <input type="text" id="searchBar" placeholder="Search by title or tag..." oninput="searchProblems()" />
+    <div id="filters">
+      <select id="difficultyFilter" onchange="applyFilters()">
+        <option value="all">All Difficulties</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+
+      <input
+        type="text"
+        id="tagFilter"
+        placeholder="Filter by tag (e.g. dp, array)"
+        oninput="applyFilters()"
+      />
+    </div>
 
     <!-- Problem List -->
     <div id="problemList"></div>
