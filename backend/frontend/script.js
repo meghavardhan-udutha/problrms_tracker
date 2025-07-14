@@ -8,10 +8,22 @@ let tagFilter = '';
 
 // Fetch and display problems from backend
 async function fetchProblems() {
-  const res = await fetch(API_URL);
-  allProblems = await res.json();
-  displayProblems();
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+
+    if (!Array.isArray(data)) {
+      console.error("Expected array but got:", data);
+      return;
+    }
+
+    allProblems = data;
+    displayProblems();
+  } catch (err) {
+    console.error("Error fetching problems:", err);
+  }
 }
+
 
 // Add a new problem
 document.getElementById('problemForm').addEventListener('submit', async function (e) {
