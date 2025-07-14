@@ -24,13 +24,15 @@ def init_db():
         CREATE TABLE IF NOT EXISTS problems (
             id TEXT PRIMARY KEY,
             title TEXT,
-            link TEXT,     -- 🔁 changed from platform
+            link TEXT,
             tags TEXT,
             notes TEXT,
             status TEXT,
-            date TEXT
+            date TEXT,
+            difficulty TEXT
         )
     ''')
+
     conn.commit()
     conn.close()
 
@@ -45,8 +47,10 @@ def row_to_dict(row):
         "tags": row[3].split(',') if row[3] else [],
         "notes": row[4],
         "status": row[5],
-        "date": row[6]
+        "date": row[6],
+        "difficulty": row[7]  
     }
+
 
 @app.route('/problems', methods=['GET'])
 def get_problems():

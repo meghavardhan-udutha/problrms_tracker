@@ -17,18 +17,21 @@ document.getElementById('problemForm').addEventListener('submit', async function
   const title = document.getElementById('title').value.trim();
   // const platform = document.getElementById('problemLink').value.trim();
   const link = document.getElementById('problemLink').value.trim(); 
+  const difficulty = document.getElementById('difficulty').value;
   const tags = document.getElementById('tags').value.trim().split(',').map(tag => tag.trim());
   const notes = document.getElementById('notes').value.trim();
 
   const newProblem = {
-    id: Date.now().toString(),
-    title,
-    link,
-    tags,
-    notes,
-    status: 'todo',
-    date: new Date().toLocaleDateString()
-  };
+  id: Date.now().toString(),
+  title,
+  link,
+  tags,
+  notes,
+  status: 'todo',
+  date: new Date().toLocaleDateString(),
+  difficulty  // ✅ Add this
+};
+
 
   await fetch(API_URL, {
     method: 'POST',
@@ -57,6 +60,7 @@ function displayProblems() {
     card.innerHTML = `
       <h3>${problem.title}</h3>
       <p><strong>Link:</strong> <a href="${problem.link}" target="_blank">${problem.link || '-'}</a></p>
+      <p><strong>Difficulty:</strong> ${problem.difficulty || '-'}</p>
       <p><strong>Tags:</strong> ${problem.tags.join(', ') || '-'}</p>
       <p><strong>Date:</strong> ${problem.date}</p>
       <p><strong>Notes:</strong><br>${problem.notes || '-'}</p>

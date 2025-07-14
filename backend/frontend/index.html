@@ -15,6 +15,12 @@
       <input type="text" id="title" placeholder="Problem Title" required />
       <!-- <input type="text" id="platform" placeholder="Platform (e.g., LeetCode)" /> -->
        <input type="url" id="problemLink" placeholder="https://leetcode.com/problem" />
+       <select id="difficulty" required>
+        <option value="" disabled selected>Select Difficulty</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
       <input type="text" id="tags" placeholder="Tags (comma-separated)" />
       <textarea id="notes" placeholder="Your notes or solution..."></textarea>
       <button type="submit">Add Problem</button>
