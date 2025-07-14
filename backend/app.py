@@ -24,7 +24,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS problems (
             id TEXT PRIMARY KEY,
             title TEXT,
-            platform TEXT,
+            link TEXT,     -- 🔁 changed from platform
             tags TEXT,
             notes TEXT,
             status TEXT,
@@ -33,6 +33,7 @@ def init_db():
     ''')
     conn.commit()
     conn.close()
+
 
 init_db()
 
