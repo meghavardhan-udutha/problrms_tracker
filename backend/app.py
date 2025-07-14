@@ -1,9 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import sqlite3
-import os
-if os.path.exists('database.db'):
-    os.remove('database.db')  # 💣 Delete old DB (only for now)
+import os  
 
 # app = Flask(__name__, static_folder='../frontend', static_url_path='')
 app = Flask(__name__, static_folder='frontend', static_url_path='')
