@@ -16,7 +16,7 @@ HEADERS = {
     'Content-Type': 'application/json'
 }
 @app.route('/problems', methods=['POST'])
-def add_problem():
+def addd_problem():
     data = request.json
     print("Incoming POST:", data)  # 👈 Add this line
     url = f"{SUPABASE_URL}/rest/v1/{TABLE_NAME}"
