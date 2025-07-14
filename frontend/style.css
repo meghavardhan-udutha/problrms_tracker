@@ -1,0 +1,162 @@
+body {
+  background-color: #222831;
+  color: #eeeeee;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  color: #00adb5;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input, textarea, button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+input, textarea {
+  background-color: #393e46;
+  color: #eeeeee;
+}
+
+button {
+  background-color: #00adb5;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #00939a;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#searchBar{
+    margin-bottom: 10px;
+}
+#problemList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.problem-card {
+  background-color: #393e46;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.problem-card .status {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.status.todo {
+  background-color: #ff5722;
+}
+
+.status.solved {
+  background-color: #4caf50;
+}
+
+.card-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background-color: #393e46;
+  color: #eee;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.modal.visible .modal-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.save-btn {
+  background-color: #00adb5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #eeeeee;
+  color: #222831;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #00939a;
+}
+
+.cancel-btn:hover {
+  background-color: #dcdcdc;
+}
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSA Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📘 DSA Tracker</h1>
+
+    <!-- Add Problem Form -->
+    <form id="problemForm">
+      <input type="text" id="title" placeholder="Problem Title" required />
+      <input type="text" id="platform" placeholder="Platform (e.g., LeetCode)" />
+      <input type="text" id="tags" placeholder="Tags (comma-separated)" />
+      <textarea id="notes" placeholder="Your notes or solution..."></textarea>
+      <button type="submit">Add Problem</button>
+    </form>
+
+    <!-- Filter Buttons -->
+    <div class="filters">
+      <button onclick="filterProblems('all')">All</button>
+      <button onclick="filterProblems('todo')">To-do</button>
+      <button onclick="filterProblems('solved')">Solved</button>
+    </div>
+
+    <!-- Search Bar -->
+    <input type="text" id="searchBar" placeholder="Search by title or tag..." oninput="searchProblems()" />
+
+    <!-- Problem List -->
+    <div id="problemList"></div>
+  </div>
+  <!-- Edit Modal -->
+    <div id="editModal" class="modal hidden">
+    <div class="modal-content animated">
+        <h3>Edit Problem</h3>
+        <textarea id="editNotes" rows="4" placeholder="Edit your notes..."></textarea>
+        <input type="text" id="editTags" placeholder="Edit tags (comma-separated)" />
+        <div class="modal-buttons">
+        <button class="save-btn" onclick="saveEdit()">💾 Save</button>
+        <button class="cancel-btn" onclick="closeEditModal()">❌ Cancel</button>
+        </div>
+    </div>
+    </div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
