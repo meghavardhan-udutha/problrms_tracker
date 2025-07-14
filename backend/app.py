@@ -1,125 +1,51 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-import sqlite3
-import os  
+import requests
+import os
 
-# app = Flask(__name__, static_folder='../frontend', static_url_path='')
-app = Flask(__name__, static_folder='frontend', static_url_path='')
+app = Flask(__name__)
 CORS(app)
 
-# Serve frontend files
-@app.route('/')
-def serve_frontend():
-    return send_from_directory(app.static_folder, 'index.html')
+# Replace with your Supabase info
+SUPABASE_URL = 'https://lmugwvvihinxxllipyqd.supabase.co'
+SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdWd3dnZpaGlueHhsbGlweXFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI0OTc5MDUsImV4cCI6MjA2ODA3MzkwNX0.A2L5MWcm1L8ejcVhR1pr0QEAr24rpcsIKCkpsAnnIlc'
+TABLE_NAME = 'problems'
 
-@app.route('/<path:path>')
-def serve_static_file(path):
-    return send_from_directory(app.static_folder, path)
-
-# SQLite setup
-def init_db():
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute('''
-        CREATE TABLE IF NOT EXISTS problems (
-            id TEXT PRIMARY KEY,
-            title TEXT,
-            link TEXT,
-            tags TEXT,
-            notes TEXT,
-            status TEXT,
-            date TEXT,
-            difficulty TEXT
-        )
-    ''')
-
-    conn.commit()
-    conn.close()
-
-
-init_db()
-
-def row_to_dict(row):
-    return {
-        "id": row[0],
-        "title": row[1],
-        "link": row[2],
-        "tags": row[3].split(',') if row[3] else [],
-        "notes": row[4],
-        "status": row[5],
-        "date": row[6],
-        "difficulty": row[7]  
-    }
-
+HEADERS = {
+    'apikey': SUPABASE_KEY,
+    'Authorization': f'Bearer {SUPABASE_KEY}',
+    'Content-Type': 'application/json'
+}
 
 @app.route('/problems', methods=['GET'])
 def get_problems():
-    selected_date = request.args.get('date')  # from ?date=YYYY-MM-DD
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-
-    if selected_date:
-        # Return only problems from that date
-        c.execute('SELECT * FROM problems WHERE date = ?', (selected_date,))
+    date_filter = request.args.get('date')
+    if date_filter:
+        url = f"{SUPABASE_URL}/rest/v1/{TABLE_NAME}?date=eq.{date_filter}&select=*"
     else:
-        # Return all problems sorted by date
-        c.execute('SELECT * FROM problems ORDER BY date DESC')
-
-    rows = c.fetchall()
-    conn.close()
-    return jsonify([row_to_dict(row) for row in rows])
-
-
+        url = f"{SUPABASE_URL}/rest/v1/{TABLE_NAME}?select=*"
+    res = requests.get(url, headers=HEADERS)
+    return jsonify(res.json())
 
 @app.route('/problems', methods=['POST'])
 def add_problem():
     data = request.json
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute('''
-        INSERT INTO problems (id, title, link, tags, notes, status, date, difficulty)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (
-        data['id'],
-        data['title'],
-        data.get('link', ''),
-        ','.join(data.get('tags', [])),
-        data.get('notes', ''),
-        data.get('status', 'todo'),
-        data.get('date'),
-        data.get('difficulty', '')  # ✅ NEW FIELD HERE
-    ))
-    conn.commit()
-    conn.close()
-    return jsonify({"message": "Problem added!"}), 201
+    url = f"{SUPABASE_URL}/rest/v1/{TABLE_NAME}"
+    res = requests.post(url, headers=HEADERS, json=data)
+    return jsonify({"message": "Added!"}), res.status_code
 
 @app.route('/problems/<id>', methods=['PUT'])
 def update_problem(id):
     data = request.json
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute('''
-        UPDATE problems SET status=?, notes=?, tags=? WHERE id=?
-    ''', (
-        data.get('status', ''),
-        data.get('notes', ''),
-        ','.join(data.get('tags', [])),
-        id
-    ))
-    conn.commit()
-    conn.close()
-    return jsonify({"message": "Problem updated!"})
+    url = f"{SUPABASE_URL}/rest/v1/{TABLE_NAME}?id=eq.{id}"
+    res = requests.patch(url, headers=HEADERS, json=data)
+    return jsonify({"message": "Updated!"}), res.status_code
 
 @app.route('/problems/<id>', methods=['DELETE'])
 def delete_problem(id):
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute('DELETE FROM problems WHERE id=?', (id,))
-    conn.commit()
-    conn.close()
-    return jsonify({"message": "Problem deleted!"})
+    url = f"{SUPABASE_URL}/rest/v1/{TABLE_NAME}?id=eq.{id}"
+    res = requests.delete(url, headers=HEADERS)
+    return jsonify({"message": "Deleted!"}), res.status_code
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, host='0.0.0.0', port=port)
-
+    app.run(debug=True)
