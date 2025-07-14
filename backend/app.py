@@ -77,8 +77,8 @@ def add_problem():
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
     c.execute('''
-        INSERT INTO problems (id, title, link, tags, notes, status, date)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO problems (id, title, link, tags, notes, status, date, difficulty)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         data['id'],
         data['title'],
@@ -86,7 +86,8 @@ def add_problem():
         ','.join(data.get('tags', [])),
         data.get('notes', ''),
         data.get('status', 'todo'),
-        data.get('date')
+        data.get('date'),
+        data.get('difficulty', '')  # ✅ NEW FIELD HERE
     ))
     conn.commit()
     conn.close()
