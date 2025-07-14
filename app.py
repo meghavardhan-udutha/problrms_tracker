@@ -15,6 +15,13 @@ HEADERS = {
     'Authorization': f'Bearer {SUPABASE_KEY}',
     'Content-Type': 'application/json'
 }
+@app.route('/problems', methods=['POST'])
+def add_problem():
+    data = request.json
+    print("Incoming POST:", data)  # 👈 Add this line
+    url = f"{SUPABASE_URL}/rest/v1/{TABLE_NAME}"
+    res = requests.post(url, headers=HEADERS, json=data)
+    return jsonify({"message": "Added!"}), res.status_code
 
 # ✅ Serve index.html at "/"
 @app.route('/')
