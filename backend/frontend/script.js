@@ -30,7 +30,7 @@ document.getElementById('problemForm').addEventListener('submit', async function
   tags,
   notes,
   status: 'todo',
-  date: new Date().toLocaleDateString(),
+  date: new Date().toISOString().split('T')[0],
   difficulty  // ✅ Add this
 };
 
