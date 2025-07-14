@@ -1,4 +1,5 @@
-const API_URL = 'http://127.0.0.1:5000/problems';
+// const API_URL = 'http://127.0.0.1:5000/problems';
+const API_URL = 'https://problems-tracker.onrender.com/problems';
 let currentFilter = 'all';
 let allProblems = [];
 
