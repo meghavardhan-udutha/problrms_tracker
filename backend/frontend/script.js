@@ -214,7 +214,7 @@ function filterByDate() {
     .then(res => res.json())
     .then(data => {
       allProblems = data;
-      renderProblems();
+      displayProblems();  // ✅ FIXED
     });
 }
 
