@@ -58,27 +58,43 @@ function displayProblems() {
   });
 
 
-  filtered.forEach(problem => {
-    const card = document.createElement('div');
-    card.className = 'problem-card';
+ const groupedByDate = {};
 
-    card.innerHTML = `
-      <h3>${problem.title}</h3>
-      <p><strong>Link:</strong> <a href="${problem.link}" target="_blank">${problem.link || '-'}</a></p>
-      <p><strong>Difficulty:</strong> ${problem.difficulty || '-'}</p>
-      <p><strong>Tags:</strong> ${problem.tags.join(', ') || '-'}</p>
-      <p><strong>Date:</strong> ${problem.date}</p>
-      <p><strong>Notes:</strong><br>${problem.notes || '-'}</p>
-      <span class="status ${problem.status}">${problem.status.toUpperCase()}</span>
-      <div class="card-actions">
-        <button onclick="markSolved('${problem.id}')">✅ Done</button>
-        <button onclick="openEditModal('${problem.id}')">✏️ Edit</button>
-        <button onclick="deleteProblem('${problem.id}')">🗑️ Delete</button>
-    </div>
-    `;
-
-    list.appendChild(card);
+filtered.forEach(problem => {
+    if (!groupedByDate[problem.date]) {
+      groupedByDate[problem.date] = [];
+    }
+    groupedByDate[problem.date].push(problem);
   });
+
+  Object.keys(groupedByDate).sort((a, b) => new Date(b) - new Date(a)).forEach(date => {
+    const dateHeader = document.createElement('h2');
+    dateHeader.innerText = `📅 ${date}`;
+    list.appendChild(dateHeader);
+
+    groupedByDate[date].forEach(problem => {
+      const card = document.createElement('div');
+      card.className = 'problem-card';
+
+      card.innerHTML = `
+        <h3>${problem.title}</h3>
+        <p><strong>Link:</strong> <a href="${problem.link}" target="_blank">${problem.link || '-'}</a></p>
+        <p><strong>Difficulty:</strong> ${problem.difficulty || '-'}</p>
+        <p><strong>Tags:</strong> ${problem.tags.join(', ') || '-'}</p>
+        <p><strong>Date:</strong> ${problem.date}</p>
+        <p><strong>Notes:</strong><br>${problem.notes || '-'}</p>
+        <span class="status ${problem.status}">${problem.status.toUpperCase()}</span>
+        <div class="card-actions">
+          <button onclick="markSolved('${problem.id}')">✅ Done</button>
+          <button onclick="openEditModal('${problem.id}')">✏️ Edit</button>
+          <button onclick="deleteProblem('${problem.id}')">🗑️ Delete</button>
+        </div>
+      `;
+
+      list.appendChild(card);
+    });
+  });
+
 }
 
 function applyFilters() {
