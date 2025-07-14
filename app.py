@@ -8,7 +8,7 @@ CORS(app)
 
 # --- Supabase Config ---
 SUPABASE_URL = 'https://lmugwvvihinxxllipyqd.supabase.co'
-SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdWd3dnZpaGlueHhsbGlweXFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI0OTc5MDUsImV4cCI6MjA2ODA3MzkwNX0.A2L5MWcm1L8ejcVhR1pr0QEAr24rpcsIKCkpsAnnIlc'  # ⛔️ hide this in env variables!
+SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdWd3dnZpaGlueHhsbGlweXFkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MjQ5NzkwNSwiZXhwIjoyMDY4MDczOTA1fQ.gVSqItXzGhoRjBShZ2GFG_TZYl9T41Ayc7VgWd_Vq64'  # ⛔️ hide this in env variables!
 TABLE_NAME = 'problems'
 
 HEADERS = {
